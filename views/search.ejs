@@ -1,0 +1,77 @@
+<%- include('partials/header.ejs') %>
+
+<div class="bg-body-secondary container rounded border py-3">
+    
+    <form class="row g-3 py-3 px-5" action="/search" method="post">
+        <div class="col-lg-12">
+            <h4 class="mb-3"><i class="bi bi-search"></i> Search </h4>
+        </div>
+        <div class="col-md-8">
+            <label for="name" class="form-label ps-2">Name</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Book or author name" required>
+        </div>
+        <div class="col-md-2">
+            <label for="type" class="form-label ps-2">Type</label>
+            <select class="form-select" id="type" name="type" required>
+                <option selected value="title">book title</option>
+                <option value="author">author</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="type" class="form-label ps-2">Limit Results to</label>
+            <select class="form-select" id="results" name="results" required>
+                <option selected value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-success" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="row px-5">
+        <% if (locals.books) { %>
+        <div class="col-lg-12">
+            <h4 class="mb-3"><i class="bi bi-book"></i> Results</h4>
+        </div>    
+            <div class="container"> <!--Search results-->
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                <% books.forEach((book) => { %>
+                    <form action="/add" method="post">
+                        <div class="d-flex col">
+                            <div class="d-flex col card shadow-sm">
+                                <input type="hidden" name="coverId" value="<%= book.coverId %>"></input>
+                                <svg class="pt-3 bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="book cover photo" focusable="false">
+                                    <% if (book.coverId) { %>
+                                        <image href="https://covers.openlibrary.org/b/id/<%= book.coverId %>-L.jpg" width="100%" height="100%"></image>
+                                    <% } else { %>
+                                        <image href="/images/no_cover.jpg" width="100%" height="100%"></image>
+                                    <% } %>    
+                                </svg>
+                                <div class="card-body text-center">
+                                    <p class="card-text fw-bold"><%= book.title %></p>
+                                    <input type="hidden" name="title" value="<%= book.title %>"></input>
+                                    
+                                    <p class="card-text fw-bolder">By <%= book.author %></p>
+                                    <input type="hidden" name="author" value="<%= book.author %>"></input>
+                                    
+                                    <p class="card-text fw-lighter"><%= book.year %></p>
+                                    <input type="hidden" name="year" value="<%= book.year %>"></input>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button type="submit" class="btn btn-sm btn-outline-success">Add book</button>
+                                    </div>
+                                    <input type="hidden" name="bookId" value="<%= book.bookId %>"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <% }); %>
+                </div>
+            </div>
+        <% }; %>
+    </div>
+</div>
+
+<%- include('partials/footer.ejs') %>

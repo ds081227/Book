@@ -1,0 +1,55 @@
+<%- include('partials/header.ejs') %>
+
+
+<div class="container">
+    <div class="row px-5 g-5">
+        <div class="col-xl-4"> <!--Book cover photo-->
+            <div class="col-lg-12">
+                <% if (book.cover_id) { %>
+                    <img class="img-fluid" src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-L.jpg" alt="book cover photo">
+                <% } else { %>
+                    <img class="img-fluid" src="/images/no_cover.jpg" alt="no_cover_photo">
+                <% } %>   
+            </div>
+        </div>
+        
+        <div class="col-xl-8"> <!--Book details, review, rating-->
+            <form method="post" action="/update">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="fs-2"><%= book.title %></p>
+                        <p class="fs-5">By <%= book.author_name %> in <%= book.first_publish_year %></p>
+                        <input type="hidden" name="book_id" value="<%= book.book_id %>"></input>
+                    </div>
+                    <div class="col-lg-10">
+                        <textarea class="form-control" name="review" id="review" rows="13" required placeholder="Review" style="resize: none;"><%= book.review %></textarea>
+                        <div class="row">
+                            <div class="fs-5 col rating">
+                                <p style="color:black; display:inline ">Ratings: </p>
+                                <input type="radio" name="rating" value="1" id="rating1" <%= book.rating == 1 ? 'checked' : '' %>>
+                                <label for="rating1" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="2" id="rating2" <%= book.rating == 2 ? 'checked' : '' %>>
+                                <label for="rating2" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="3" id="rating3" <%= book.rating == 3 ? 'checked' : '' %>>
+                                <label for="rating3" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="4" id="rating4" <%= book.rating == 4 ? 'checked' : '' %>>
+                                <label for="rating4" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="5" id="rating5" <%= book.rating == 5 ? 'checked' : '' %>>
+                                <label for="rating5" class="fa fa-star"></label>
+                            </div>
+                        </div>    
+                        <div class="col-12 pt-3">
+                            <button class="btn btn-success" type="submit">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        
+
+    </div>
+</div>
+
+
+<%- include('partials/footer.ejs') %>

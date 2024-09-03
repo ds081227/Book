@@ -1,0 +1,59 @@
+<%- include('partials/header.ejs') %>
+
+
+<div class="container">
+    <div class="row px-5 g-5">
+        <div class="col-xl-4"> <!--Book cover photo-->
+            <div class="col-lg-12">
+                <% if (book.coverId) { %>
+                    <img class="img-fluid" src="https://covers.openlibrary.org/b/id/<%= book.coverId %>-L.jpg" alt="book cover photo">
+                <% } else { %>
+                    <img class="img-fluid" src="/images/no_cover.jpg" alt="no_cover_photo">
+                <% } %>   
+            </div>
+        </div>
+        
+        <div class="col-xl-8"> <!--Book details, review, rating-->
+            <form method="post" action="/confirm">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="fs-2"><%= book.title %></p>
+                        <p class="fs-5">By <%= book.author %> in <%= book.year %></p>
+                        <input type="hidden" name="title" value="<%= book.title %>"></input>
+                        <input type="hidden" name="author" value="<%= book.author %>"></input>
+                        <input type="hidden" name="year" value="<%= book.year %>"></input>
+                        <input type="hidden" name="coverId" value="<%= book.coverId %>"></input>
+                        <input type="hidden" name="bookId" value="<%= book.bookId %>"></input>
+                    </div>
+                    <div class="col-lg-10">
+                        <textarea class="form-control" name="review" id="review" rows="13" required placeholder="Review" style="resize: none;"></textarea>
+                        <div class="row">
+                            <div class="fs-5 col rating">
+                                <p style="color:black; display:inline ">Ratings: </p>
+                                <input type="radio" name="rating" value="1" id="rating1">
+                                <label for="rating1" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="2" id="rating2">
+                                <label for="rating2" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="3" id="rating3" checked>
+                                <label for="rating3" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="4" id="rating4">
+                                <label for="rating4" class="fa fa-star"></label>
+                                <input type="radio" name="rating" value="5" id="rating5">
+                                <label for="rating5" class="fa fa-star"></label>
+                            </div>
+                        </div>    
+                        <div class="col-12 pt-3">
+                            <button class="btn btn-success" type="submit">Add to Library</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        
+
+    </div>
+</div>
+
+
+<%- include('partials/footer.ejs') %>
